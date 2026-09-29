@@ -1,0 +1,147 @@
+# Project name
+
+Starter template for the **Development of AI Applications** course final group project.
+
+## Team members
+
+- Ari Mononen ari.mononen@student.hamk.fi
+- Elias Rosenberg elias.rosenberg@student.hamk.fi
+- Kim Erwe kim.erwe@student.hamk.fi
+- Riku Turunen riku.turunen@student.hamk.fi
+
+
+## Problem
+
+### Intended users
+Who are the primary target users of this application?
+- Mostly office workers and employees who deal with a lot of paperwork.
+
+### Problem statement
+What specific problem does this application solve for those users?
+- Reduces huge amounts of manual labor.
+
+### Why AI is appropriate
+Why does this problem require AI / LLM capabilities rather than traditional deterministic software?
+- Deterministic softwares follow a strict pattern which has been determined and dont have the necessary capabilities to process the documents how the user prefers / wants. This problem can be solved with a document analyzer which hass been trained with an LLM and/or uses AI.
+
+## Solution
+
+Briefly describe your application, its primary value proposition, and how it addresses the problem statement above.
+- Our application of choice will be a document comparison tool. It's primary value comes from saving time and automating redundant repetitive tasks. It's for minimizing mistakes which come from repetitiveness and compares the documents on user input/preference.
+
+## Main user workflow
+
+1. **User Input:** The user submits a prompt or query via the Gradio user interface.
+2. **Processing & Guardrails:** The application service layer (`src/services/ai_service.py`) validates and formats the request.
+3. **Model Response:** The model client calls Ollama locally and returns the response back through the service layer to the UI.
+
+## Architecture
+
+Below is the initial starter architecture. As your project evolves with additional capabilities, replace or extend this diagram in [`docs/architecture.md`](docs/architecture.md).
+
+```text
+User
+  ↓
+Gradio UI (app/ui.py)
+  ↓
+Application / AI Service (src/services/ai_service.py)
+  ↓
+Model Client (src/models/model_client.py)
+  ↓
+Ollama (Local LLM Server)
+```
+
+> **Core Architectural Rule:** The user interface must NEVER communicate directly with the model client or Ollama. All interactions must pass through the service layer (`ai_service.py`).
+
+## Model
+
+- **Model used:**
+- **Selection rationale:** 
+
+## Additional AI capability
+
+Select at least one additional capability to implement for your final project:
+
+- [ ] RAG (Retrieval-Augmented Generation)
+- [ ] Tools / External API integration
+- [ ] Model Context Protocol (MCP)
+- [ ] Agentic workflow (Model-selected actions based on observations)
+- [ ] Memory / Persistent state
+- [X] Multimodal interaction (Text + Images)
+- [ ] Other: ______________________
+
+### Capability justification
+Explain why the selected capability is useful and necessary for your application's user problem.
+- We've chosen multimodal interaction. We want the final product to be as versatile as possible and able to analyze different file type documents.
+
+## Setup
+
+### 1. Create the Conda environment
+
+```bash
+conda env create -f environment.yml
+```
+
+### 2. Activate the environment
+
+```bash
+conda activate dev-ai-project
+```
+
+### 3. Configure environment variables
+
+Copy `.env.example` to create your local `.env` configuration file:
+
+On Linux / macOS:
+```bash
+cp .env.example .env
+```
+
+On Windows (Command Prompt / PowerShell):
+```powershell
+copy .env.example .env
+```
+
+Ensure `.env` contains valid values for `OLLAMA_BASE_URL` and `MODEL_NAME`:
+```env
+OLLAMA_BASE_URL=http://localhost:11434
+MODEL_NAME=llama3.2
+```
+
+### 4. Start Ollama
+
+Make sure Ollama is installed and running locally, then pull your configured model:
+
+```bash
+ollama run llama3.2
+```
+
+### 5. Run the application
+
+Run the application from the root directory of the project:
+
+```bash
+python -m app.main
+```
+
+Then open your browser at `http://localhost:7860`.
+
+### 6. Run automated tests
+
+```bash
+pytest
+```
+
+## Evaluation
+
+Describe your evaluation methodology and summarize key results. Starter test cases can be found in [`evaluation/test_cases.json`](evaluation/test_cases.json).
+
+Refer to [`evaluation/README.md`](evaluation/README.md) for guidelines on defining success, edge cases, and failure scenarios.
+
+## Known limitations
+
+- Highlight known system limitations, unhandled edge cases, or boundaries of current capabilities.
+
+## Future improvements
+
+- List planned feature enhancements, architectural refactorings, or future capabilities.
